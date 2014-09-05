@@ -61,11 +61,6 @@
                     e = e.GetBaseException();
                 }
 
-                if (e is TransportMessageHandlingFailedException)
-                {
-                    e = e.InnerException;
-                }
-
                 message.RevertToOriginalBodyIfNeeded();
 
                 failureManager.ProcessingAlwaysFailsForMessage(message, e);

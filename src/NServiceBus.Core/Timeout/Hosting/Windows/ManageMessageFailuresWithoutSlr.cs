@@ -5,6 +5,7 @@ namespace NServiceBus.Timeout.Hosting.Windows
     using Logging;
     using Transports;
     using Unicast.Queuing;
+    using Utils;
 
     class ManageMessageFailuresWithoutSlr : IManageMessageFailures
     {
@@ -77,13 +78,13 @@ namespace NServiceBus.Timeout.Hosting.Windows
             message.Headers["NServiceBus.ExceptionInfo.Reason"] = reason;
             message.Headers["NServiceBus.ExceptionInfo.ExceptionType"] = e.GetType().FullName;
 
-            if (e.InnerException != null)
+            if (e.InnerException != null) 
                 message.Headers["NServiceBus.ExceptionInfo.InnerExceptionType"] = e.InnerException.GetType().FullName;
 
             message.Headers["NServiceBus.ExceptionInfo.HelpLink"] = e.HelpLink;
             message.Headers["NServiceBus.ExceptionInfo.Message"] = e.GetMessage();
             message.Headers["NServiceBus.ExceptionInfo.Source"] = e.Source;
-            message.Headers["NServiceBus.ExceptionInfo.StackTrace"] = e.StackTrace;
+            message.Headers["NServiceBus.ExceptionInfo.StackTrace"] = e.CreateFullStackTrace();
 
             var failedQ = localAddress ?? Address.Local;
 

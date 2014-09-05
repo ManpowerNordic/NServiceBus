@@ -5,6 +5,7 @@ namespace NServiceBus.Faults.Forwarder
     using SecondLevelRetries.Helpers;
     using Transports;
     using Unicast.Queuing;
+    using Utils;
 
     /// <summary>
     /// Implementation of IManageMessageFailures by forwarding messages
@@ -95,14 +96,14 @@ namespace NServiceBus.Faults.Forwarder
         {
             message.Headers["NServiceBus.ExceptionInfo.ExceptionType"] = e.GetType().FullName;
 
-            if (e.InnerException != null)
+            if (e.InnerException != null) 
             {
                 message.Headers["NServiceBus.ExceptionInfo.InnerExceptionType"] = e.InnerException.GetType().FullName;
             }
 
             message.Headers["NServiceBus.ExceptionInfo.Message"] = e.GetMessage();
             message.Headers["NServiceBus.ExceptionInfo.Source"] = e.Source;
-            message.Headers["NServiceBus.ExceptionInfo.StackTrace"] = e.ToString();
+            message.Headers["NServiceBus.ExceptionInfo.StackTrace"] = e.CreateFullStackTrace();
        
             var failedQ = localAddress ?? Address.Local;
 

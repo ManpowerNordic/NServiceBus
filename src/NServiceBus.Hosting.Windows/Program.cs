@@ -137,17 +137,7 @@
                                                                        foreach (var dependency in arguments.DependsOn)
                                                                            x.DependsOn(dependency);
                                                                });
-            try
-            {
-
-                Runner.Host(cfg, args);
-            }
-            catch (StateMachineException exception)
-            {
-                var innerException = exception.InnerException;
-                innerException.PreserveStackTrace();
-                throw innerException;
-            }
+            Runner.Host(cfg, args);           
         }
 
         static void SetHostServiceLocatorArgs(string[] args)

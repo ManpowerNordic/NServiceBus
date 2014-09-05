@@ -202,6 +202,9 @@
     <Compile Include="Sagas\SagaPersistenceBehavior.cs" />
     <Compile Include="Unicast\Messages\LogicalMessageFactory.cs" />
     <Compile Include="Unicast\SendOptions.cs" />
+    <Compile Include="Unicast\Transport\OnTransportMessageReceivedException.cs" />
+    <Compile Include="Unicast\Transport\OnFinishedMessageProcessingException.cs" />
+    <Compile Include="Unicast\Transport\OnStartedMessageProcessingException.cs" />
     <Compile Include="UnitOfWork\UnitOfWorkBehavior.cs" />
     <Compile Include="Pipeline\IBehavior.cs" />
     <Compile Include="Pipeline\BehaviorChain.cs" />
@@ -603,12 +606,12 @@
     <Compile Include="Utils\BackOff.cs" />
     <Compile Include="CircuitBreakers\RepeatedFailuresOverTimeCircuitBreaker.cs" />
     <Compile Include="Utils\DeterministicGuid.cs" />
+    <Compile Include="Utils\ExceptionStackTracePrinter.cs" />
     <Compile Include="Utils\FileVersionRetriever.cs" />
     <Compile Include="Utils\Reflection\DelegateFactory.cs" />
     <Compile Include="Utils\Reflection\ExtensionMethods.cs" />
     <Compile Include="Utils\Reflection\Reflect.cs" />
     <Compile Include="Utils\RegistryReader.cs" />
-    <Compile Include="Utils\StackTracePreserver.cs" />
     <Compile Include="WcfService.cs" />
   </ItemGroup>
   <ItemGroup>

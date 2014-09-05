@@ -343,8 +343,7 @@ namespace NServiceBus.Unicast.Transport
 
             if (exceptionFromStartedMessageHandling != null)
             {
-                exceptionFromStartedMessageHandling.PreserveStackTrace();
-                throw exceptionFromStartedMessageHandling; //cause rollback 
+                throw new OnStartedMessageProcessingException(exceptionFromStartedMessageHandling);
             }
 
             //care about failures here
@@ -376,21 +375,18 @@ namespace NServiceBus.Unicast.Transport
                     }
                     else
                     {
-                        exceptionFromMessageHandling.PreserveStackTrace();
-                        throw exceptionFromMessageHandling;//cause rollback    
+                        throw new OnTransportMessageReceivedException(exceptionFromMessageHandling);//cause rollback    
                     }
                 }
                 else
                 {
-                    exceptionFromMessageHandling.PreserveStackTrace();
-                    throw exceptionFromMessageHandling;//cause rollback    
+                    throw new OnTransportMessageReceivedException(exceptionFromMessageHandling);//cause rollback    
                 }
             }
 
             if (exceptionFromMessageModules != null) //cause rollback
             {
-                exceptionFromMessageModules.PreserveStackTrace();
-                throw exceptionFromMessageModules;
+                throw new OnFinishedMessageProcessingException(exceptionFromMessageModules);
             }
         }
 
