@@ -10,8 +10,13 @@
     [TestFixture]
     public class BehaviorChainTests
     {
+
+//C# - for NUnit
+#if DEBUG 
+        [Ignore("We only want shortened stack traces in production builds, not when debugging NServiceBus itself")] 
+#endif
         [Test]
-        public void When_exception_is_thrown_stack_trace_is_trimmed()
+        public void When_exception_is_thrown_in_a_release_build_stack_trace_is_trimmed()
         {
             var behaviorChain = new BehaviorChain<FakeContext>(new List<Type>
                 {
