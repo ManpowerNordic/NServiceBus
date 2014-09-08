@@ -75,15 +75,16 @@ namespace NServiceBus.Timeout.Hosting.Windows
 
         void SetExceptionHeaders(TransportMessage message, Exception e, string reason)
         {
+            var baseException = e.GetBaseException();            
             message.Headers["NServiceBus.ExceptionInfo.Reason"] = reason;
-            message.Headers["NServiceBus.ExceptionInfo.ExceptionType"] = e.GetType().FullName;
+            message.Headers["NServiceBus.ExceptionInfo.ExceptionType"] = baseException.GetType().FullName;
 
             if (e.InnerException != null) 
                 message.Headers["NServiceBus.ExceptionInfo.InnerExceptionType"] = e.InnerException.GetType().FullName;
 
-            message.Headers["NServiceBus.ExceptionInfo.HelpLink"] = e.HelpLink;
-            message.Headers["NServiceBus.ExceptionInfo.Message"] = e.GetMessage();
-            message.Headers["NServiceBus.ExceptionInfo.Source"] = e.Source;
+            message.Headers["NServiceBus.ExceptionInfo.HelpLink"] = baseException.HelpLink;            
+            message.Headers["NServiceBus.ExceptionInfo.Message"] = baseException.GetMessage();
+            message.Headers["NServiceBus.ExceptionInfo.Source"] = baseException.Source;
             message.Headers["NServiceBus.ExceptionInfo.StackTrace"] = e.CreateFullStackTrace();
 
             var failedQ = localAddress ?? Address.Local;
